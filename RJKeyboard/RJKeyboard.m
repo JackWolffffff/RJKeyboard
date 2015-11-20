@@ -8,6 +8,7 @@
 
 #import "RJKeyboard.h"
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 @interface RJKeyboard()
 
@@ -21,7 +22,8 @@
 {
     
     NSMutableArray * normalBtnArray;
-    
+    CGRect tempFrame1;
+    CGRect tempFrame2;
 }
 
 @synthesize textStack;
@@ -35,6 +37,7 @@
         [self configBtns];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     }
     
     return self;
@@ -166,6 +169,7 @@
     [textStack appendString:text];
     
     mainTextField.text = textStack;
+    mainTextField.frame = tempFrame2;
     
 }
 
@@ -184,15 +188,38 @@
     
 }
 
+//键盘即将出现
 -(void)keyboardWillShow:(NSNotification *)notification{
     
     textStack = [NSMutableString stringWithString:mainTextField.text];
+    
     [self random];
 }
 
+//键盘出现
+-(void)keyboardDidShow:(NSNotification *)notification {
+
+    tempFrame1 = mainTextField.frame;
+    tempFrame2 = mainTextField.frame;
+    
+    if ((tempFrame2.origin.y + tempFrame2.size.height) > (SCREENHEIGHT - 246)) {
+        tempFrame2.origin.y = SCREENHEIGHT - 256 - tempFrame2.size.height;
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            mainTextField.frame = tempFrame2;
+
+        }];
+    }
+
+}
+
+//键盘消失
 -(void)keyboardDidHide:(NSNotification *)notification {
     
     textStack = [NSMutableString string];
-    
+    [UIView animateWithDuration:0.25 animations:^{
+        mainTextField.frame = tempFrame1;
+
+    }];
 }
 @end

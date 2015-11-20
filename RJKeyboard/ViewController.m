@@ -11,7 +11,7 @@
 
 @interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField * textField;
+@property (strong, nonatomic) UITextField * textField;
 
 @property (strong, nonatomic) UIButton * testBtn;
 
@@ -27,7 +27,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 300, 100, 30)];
+    textField.layer.borderColor = [UIColor blackColor].CGColor;
+    textField.layer.borderWidth = 1;
+    [self.view addSubview:textField];
+    
     CGRect testViewFrame = CGRectMake(0, 0, 320, 216);
     testView = [[RJKeyboard alloc] initWithFrame:testViewFrame];
     testView.mainTextField = textField;
