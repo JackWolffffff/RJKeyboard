@@ -12,7 +12,6 @@
 
 @interface RJKeyboard()
 
-
 @property (strong, nonatomic) NSMutableString * textStack;
 
 @end
@@ -68,6 +67,7 @@
         }
         
         UIButton * b = [UIButton new];
+        //随机取一个按钮
         int randowIndex = arc4random()%tempArray.count;
         b = tempArray[randowIndex];
         [tempArray removeObjectAtIndex:randowIndex];
