@@ -72,6 +72,7 @@
         b = tempArray[randowIndex];
         [tempArray removeObjectAtIndex:randowIndex];
         b.frame = btnFrame;
+
     }
     
     
@@ -110,7 +111,7 @@
         [btn setTitle:[NSString stringWithFormat:@"%d", i] forState:(UIControlStateNormal)];
         [btn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
         
-        [btn setTitleColor:[UIColor blueColor] forState:(UIControlStateSelected)];
+        [btn setTitleColor:[UIColor blueColor] forState:(UIControlStateHighlighted)];
         
         btn.layer.cornerRadius = 5;
         btn.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -124,6 +125,8 @@
             [btn setTitle:@"退格" forState:(UIControlStateNormal)];
             
         }
+        
+        btn.frame = CGRectMake(self.frame.size.width/2, self.frame.size.height/2, 0, 0);
         
         [normalBtnArray addObject:btn];
         [self addSubview:btn];
@@ -210,7 +213,7 @@
 
         }];
     }
-
+    
 }
 
 //键盘消失
